@@ -1,0 +1,8 @@
+.jumbotron{
+	height: 100vh;
+	margin-bottom:0;
+}
+
+#spinner-holder{
+	display:none;
+}
