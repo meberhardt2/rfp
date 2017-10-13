@@ -6,3 +6,27 @@
 #spinner-holder{
 	display:none;
 }
+
+#answer{
+	height:120px;
+}
+
+.button-holder button{
+	margin-right:20px;
+}
+
+.checkboxes-holder{
+	position:relative;
+}
+
+.checkboxes{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+}
+
+.container{
+	background-color:#ffffff;
+	box-shadow: 5px 5px 5px #ccc;
+}

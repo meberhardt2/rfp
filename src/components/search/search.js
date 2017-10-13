@@ -19,19 +19,50 @@ class SearchForm extends React.Component {
 		this.state = this.props.form;
 		
 		this.handleInputChange = this.handleInputChange.bind(this);
-
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleModifiedDateChange = this.handleModifiedDateChange.bind(this);
+		this.clearForm = this.clearForm.bind(this);
+		this.addRFP = this.clearForm.bind(this);
 	}
 	/****************************************/
 
+
+	/****************************************/
+	handleDateChange(date) {
+		this.setState({
+			stamp:date
+		});
+	}
+	/****************************************/
+
+
+	/****************************************/
+	handleModifiedDateChange(date) {
+		this.setState({
+			date_modified:date
+		});
+	}
+	/****************************************/
 	
+
 	/****************************************/
 	handleInputChange(event) {
 		
 		const target = event.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
-		
+		let value = '';
+
+		if(target.type === 'checkbox'){
+			if(target.checked){
+				value = target.value;
+			}
+		}
+		else{
+			value = target.value;
+		}
+		//const value = target.type === 'checkbox' ? target.checked : target.value;
+
 		//dynamically add/update state, without having to type in every form element
 		this.setState({
 			[name]: value
@@ -59,20 +90,44 @@ class SearchForm extends React.Component {
 
 
 	/****************************************/
+	clearForm(){
+		let tempState = this.state;
+
+		for (let key in tempState){
+			tempState[key] = '';
+		}
+
+		this.setState(tempState);
+	}
+	/****************************************/
+
+
+	/****************************************/
+	addRFP(){
+
+	}
+	/****************************************/
+	
+
+	/****************************************/
 	render() {
 		//without the || '', on page load the subject state is undefined, so it becomes an uncontrolled component. once the handleInputChange fires, it's not
 		//undefined anymore and becomes a controlled element and you get an error 
 		return (
 			<div className="">
 				<form>
+					<div className="form-group text-center button-holder">
+						<button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
+						<button type="button" className="btn btn-primary" onClick={this.clearForm}>Clear</button>
+						<button type="button" className="btn btn-primary" onClick={this.addRFP}>Add</button>
+					</div>
+
 					<RFPForm 
 						{...this.state} 
 						inputChange={(event) => this.handleInputChange(event)} 
+						dateChange={(date) => this.handleDateChange(date)}
+						dateModifiedChange={(date) => this.handleModifiedDateChange(date)}
 					/>
-
-					<div className="form-group">
-						<button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
-					</div>
 				</form>
 			</div>
 		);

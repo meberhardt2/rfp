@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Moment from 'moment';
 import RFPApi from 'api/RFPApi';
 import RFPForm from 'components/common/rfpForm';
 import Topper from 'components/rfp/topper';
@@ -14,6 +15,8 @@ class RFP extends React.Component {
 
 		this.getRFP = this.getRFP.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleDateChange = this.handleDateChange.bind(this);
+		this.handleModifiedDateChange = this.handleModifiedDateChange.bind(this);
 
 		this.getRFP(this.props.rfpid);
 	}
@@ -34,6 +37,14 @@ class RFP extends React.Component {
 		document.getElementById('spinner-holder').style.display = 'block';
 		
 		RFPApi.getRFP(rfpid).then((data) => {
+			//need to convert any date values to a moment object
+			if(data.stamp !== '' && typeof data.stamp !== 'undefined'){
+				data.stamp = Moment(data.stamp);
+			}
+			if(data.date_modified !== ''){
+				data.date_modified = Moment(data.date_modified);
+			}
+			
 			this.setState(data);
 
 			document.getElementById('spinner-holder').style.display = 'none';
@@ -41,6 +52,24 @@ class RFP extends React.Component {
 	} 
 	/****************************************/
 
+
+	/****************************************/
+	handleDateChange(date) {
+		this.setState({
+			stamp:date
+		});
+	}
+	/****************************************/
+
+
+	/****************************************/
+	handleModifiedDateChange(date) {
+		this.setState({
+			date_modified:date
+		});
+	}
+	/****************************************/
+	
 
 	/****************************************/
 	handleInputChange(event) {
@@ -67,6 +96,8 @@ class RFP extends React.Component {
 					<RFPForm 
 						{...this.state} 
 						inputChange={(event) => this.handleInputChange(event)} 
+						dateChange={(date) => this.handleDateChange(date)}
+						dateModifiedChange={(date) => this.handleModifiedDateChange(date)}
 					/>
 
 					<div className="form-group">
