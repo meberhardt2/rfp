@@ -1,11 +1,11 @@
 import React from 'react';
-import SearchForm from 'components/search/search.js';
+import SearchAdd from 'components/searchadd/searchadd';
 
 /****************************************************************************************/
 export default class Home extends React.Component {
 	render() {
 		return (
-			<SearchForm />
+			<SearchAdd />
 		);
 	}
 }

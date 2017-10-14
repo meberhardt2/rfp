@@ -16,7 +16,7 @@ export default class App extends React.Component {
 		return (
 			<Router>
 				<div className="jumbotron">
-					<div className="container">
+					<div className="main container">
 						<Nav />
 						<Switch>
 							<Route exact path="/" component={Home}/>

@@ -19,6 +19,24 @@ class RFPsApi {
 
 
 	/****************************************/
+	static getRFP(id) {
+		const request = new Request(`http://rfp.local/rfp/${id}`, {
+			method: 'GET',
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			})
+		});
+
+		return fetch(request).then(response => {
+			return response.json();
+		}).catch(error => {
+			return error;
+		});
+	}	
+	/****************************************/
+
+
+	/****************************************/
 	static searchRFPs(searchData) {
 		const request = new Request('http://rfp.local/search', {
 			method: 'PUT',
@@ -36,14 +54,15 @@ class RFPsApi {
 	}
 	/****************************************/
 
-
+	
 	/****************************************/
-	static getRFP(id) {
-		const request = new Request(`http://rfp.local/rfp/${id}`, {
-			method: 'GET',
+	static addRFP(rfpForm) {
+		const request = new Request(`http://rfp.local/add`, {
+			method: 'POST',
 			headers: new Headers({
 				'Content-Type': 'application/json'
-			})
+			}), 
+			body: JSON.stringify(rfpForm)
 		});
 
 		return fetch(request).then(response => {
@@ -53,7 +72,7 @@ class RFPsApi {
 		});
 	}	
 	/****************************************/
-	
+
 
 	/****************************************/
 	static updateRFP(rfp) {

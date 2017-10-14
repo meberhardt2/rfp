@@ -21,60 +21,10 @@ Flight::route('OPTIONS /*', function() {
 /********************************************************************************/
 
 
-/********************************************************************************/
-Flight::route('GET /', function(){
-	$db_conn = Flight::get('db_conn');
-	$user = Flight::get('user');
-	
-	$session = new session($db_conn,$user);
-	$session->get_nav();
+include("$root/routes/session.php");
 
-	$out = array(
-		'nav' => $session->nav
-	);
+include("$root/routes/rfp.php");
 
-	Flight::json($out);
-});
-/********************************************************************************/
-
-
-/********************************************************************************/
-Flight::route('PUT /search', function(){
-	$db_conn = Flight::get('db_conn');
-	$user = Flight::get('user');
-	
-	$search = new search($db_conn,$user);
-	$search->terms = $_POST;
-	$search->go();
-
-	$out = array(
-		'rfps' => $search->rfps
-	);
-
-	Flight::json($out);
-});
-/********************************************************************************/
-
-
-/********************************************************************************/
-Flight::route('GET /rfp/@id', function($id){
-	$db_conn = Flight::get('db_conn');
-	$user = Flight::get('user');
-
-	$rfp = new rfp_actions($db_conn,$user);
-	$rfp->id = $id;
-	$rfp->get();
-
-	$out = array();
-	foreach ($rfp as $key => $value) {
-		if(!empty($value)) {
-			$out[$key] = $value;
-		}
-	}
-
-	Flight::json($out);
-});
-/********************************************************************************/
 
 
 Flight::start();

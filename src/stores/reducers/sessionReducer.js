@@ -2,6 +2,7 @@ import * as types from 'stores/actions/actionTypes';
 import initialState from 'stores/reducers/initialState';
 
 
+/****************************************************************************************/
 export default function sessionReducer(state = initialState.session, action) {
 	switch(action.type) {
 		case types.LOAD_SESSION_SUCCESS:
@@ -12,3 +13,4 @@ export default function sessionReducer(state = initialState.session, action) {
 			return state;
 	}
 }
+/****************************************************************************************/

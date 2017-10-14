@@ -3,12 +3,12 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import * as rfpActions from 'stores/actions/rfpActions';
-import * as searchFormActions from 'stores/actions/searchFormActions';
+import * as rfpFormActions from 'stores/actions/rfpFormActions';
 
 import RFPForm from 'components/common/rfpForm.js';
 
 /****************************************************************************************/
-class SearchForm extends React.Component {
+class SearchAdd extends React.Component {
 	/****************************************/
 	constructor(props) {
 		super(props);
@@ -23,7 +23,21 @@ class SearchForm extends React.Component {
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleModifiedDateChange = this.handleModifiedDateChange.bind(this);
 		this.clearForm = this.clearForm.bind(this);
-		this.addRFP = this.clearForm.bind(this);
+		this.addRFP = this.addRFP.bind(this);
+	}
+	/****************************************/
+
+
+	/****************************************/
+	//update state when mapstatetoprops is called on an add. the add will return the same form but clear out the question and answer
+	componentWillReceiveProps(nextProps){
+		if (Object.keys(nextProps.form).length > 0) {
+			document.getElementById('spinner-holder').style.display = 'block';
+
+			this.setState(
+				nextProps.form
+			);
+		}
 	}
 	/****************************************/
 
@@ -81,7 +95,7 @@ class SearchForm extends React.Component {
 		this.props.actions.searchRFPs(this.state);
 
 		//save the form in a store, so that on navigating back the form can be repopulated with what they searched with
-		this.props.actions.searchFormUpdated(this.state);
+		this.props.actions.rfpFormUpdated(this.state);
 		
 		//navigate to results page
 		this.props.history.push("/results");
@@ -90,8 +104,10 @@ class SearchForm extends React.Component {
 
 
 	/****************************************/
-	clearForm(){
-		let tempState = this.state;
+	clearForm(event){
+		event.preventDefault();
+
+		let tempState = Object.assign({}, this.state);
 
 		for (let key in tempState){
 			tempState[key] = '';
@@ -103,8 +119,12 @@ class SearchForm extends React.Component {
 
 
 	/****************************************/
-	addRFP(){
+	addRFP(event){
+		event.preventDefault();
 
+		document.getElementById('spinner-holder').style.display = 'block';
+
+		this.props.actions.rfpFormAdd(this.state);
 	}
 	/****************************************/
 	
@@ -137,13 +157,12 @@ class SearchForm extends React.Component {
 /****************************************************************************************/
 
 
-
 /****************************************************************************************/
 function mapStateToProps(state, ownProps) {
-	//on first load, state.rfpForm will be empty. so check for that and if so, return an empty object. the props that get sent to SearchForm will then be used in the contructor to set state
-	if (Object.keys(state.searchForm).length > 0) {
+	//on first load, state.rfpForm will be empty. so check for that and if so, return an empty object. the props that get sent to SearchAdd will then be used in the contructor to set state
+	if (Object.keys(state.rfpForm).length > 0) {
 		return {
-			form: state.searchForm
+			form: state.rfpForm
 		};
 	}
 	else{
@@ -160,10 +179,10 @@ function mapDispatchToProps(dispatch) {
 	//spread operator combines both actions
 	//otherwise it would be bindActionCreators(rfpActions,dispatch)
 	return {
-		actions: bindActionCreators({ ...rfpActions, ...searchFormActions }, dispatch)
+		actions: bindActionCreators({ ...rfpActions, ...rfpFormActions }, dispatch)
 	};
 }
 /****************************************************************************************/
 
 //wrape the connect with withRouter, so we can trigger a route change when the form is submitted
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchAdd));
