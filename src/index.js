@@ -3,9 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux';
+
+import 'react-notifications/lib/notifications.css';
 import 'bootstrap/dist/css/bootstrap.css';
-//import { Navbar, Jumbotron, Button } from 'react-bootstrap';
 import 'css/style.css';
+
 import configureStore from 'stores/store/configureStore';
 import {loadSession} from 'stores/actions/sessionActions';
 import App from 'app.js';

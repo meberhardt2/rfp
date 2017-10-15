@@ -26,6 +26,9 @@ include("$root/routes/session.php");
 include("$root/routes/rfp.php");
 
 
+//$debug = file_get_contents('php://input');
+//$debug = var_export($debug,true);
+//file_put_contents('c:/test.txt', $debug);
 
 Flight::start();
 

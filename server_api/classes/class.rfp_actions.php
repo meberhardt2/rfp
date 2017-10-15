@@ -24,7 +24,12 @@ class rfp_actions extends rfp{
 			foreach($row as $key=>$value){
 				$temp_value = $value;
 				if(empty($temp_value)){
-					$temp_value = '';
+					if($key == 'stamp' || $key == 'date_modified'){
+						$temp_value = '';
+					}
+					else{
+						$temp_value = '';
+					}
 				}
 
 				$this->$key = $temp_value;
@@ -50,7 +55,23 @@ class rfp_actions extends rfp{
 
 	/******************************************/
 	function add(){
+		foreach(get_object_vars($this) as $prop=>$val){
+			if($prop != 'id' && $prop != 'db' && $prop != 'user'){
+				$sql_first .= $prop.',';
+				$sql_second .= ':'.$prop.',';
+			}
+		}
+		$sql_first = substr($sql_first,0,-1);
+		$sql_second = substr($sql_second,0,-1);
 
+		$sql = "insert into rfp($sql_first) values($sql_second)";
+		$sql = $this->db->conn->prepare($sql);
+		foreach(get_object_vars($this) as $prop=>$val){
+			if($prop != 'id' && $prop != 'db' && $prop != 'user'){
+				$sql->bindValue(':'.$prop, $val);
+			}
+		}
+		$sql->execute();
 	}
 	/******************************************/
 }

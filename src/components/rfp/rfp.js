@@ -1,3 +1,5 @@
+/* global hlghtta */
+
 import React from 'react';
 import {connect} from 'react-redux';
 import Moment from 'moment';
@@ -41,13 +43,23 @@ class RFP extends React.Component {
 			if(data.stamp !== '' && typeof data.stamp !== 'undefined'){
 				data.stamp = Moment(data.stamp);
 			}
-			if(data.date_modified !== ''){
+			if(data.date_modified !== '' && typeof data.date_modified !== 'undefined'){
 				data.date_modified = Moment(data.date_modified);
 			}
-			
 			this.setState(data);
 
 			document.getElementById('spinner-holder').style.display = 'none';
+			
+			//if they entered something into the answer field to search on it, highlight it
+			//the highlight is a seperate function loaded in the index
+			if(typeof this.props.rfpForm.answer !== 'undefined' && this.props.rfpForm.answer !== ''){
+				let div = document.getElementById('highlight-div');
+				let ta = document.getElementById('answer');
+				let patterns = {
+					"pattern1": {"pattern": this.props.rfpForm.answer, "css": "mark-style"},
+				}
+				hlghtta(div, ta, patterns);
+			}
 		});
 	} 
 	/****************************************/
@@ -73,7 +85,6 @@ class RFP extends React.Component {
 
 	/****************************************/
 	handleInputChange(event) {
-		
 		const target = event.target;
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
@@ -118,7 +129,8 @@ class RFP extends React.Component {
 function mapStateToProps(state, ownProps) {
 	return{
 		rfpid: ownProps.match.params.id,
-		rfps: state.rfps
+		rfps: state.rfps,
+		rfpForm: state.rfpForm
 	}
 	/*
 	let rfp = {};

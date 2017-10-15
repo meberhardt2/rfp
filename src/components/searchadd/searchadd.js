@@ -1,7 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux'; 
-import {withRouter} from "react-router-dom";
-import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux'; 
+import { withRouter } from "react-router-dom";
+import { bindActionCreators } from 'redux';
+import { NotificationManager } from 'react-notifications';
 import * as rfpActions from 'stores/actions/rfpActions';
 import * as rfpFormActions from 'stores/actions/rfpFormActions';
 
@@ -32,7 +33,9 @@ class SearchAdd extends React.Component {
 	//update state when mapstatetoprops is called on an add. the add will return the same form but clear out the question and answer
 	componentWillReceiveProps(nextProps){
 		if (Object.keys(nextProps.form).length > 0) {
-			document.getElementById('spinner-holder').style.display = 'block';
+			document.getElementById('spinner-holder').style.display = 'none';
+			
+			NotificationManager.success('RFP Question/answer added', 'Added!', 2000);
 
 			this.setState(
 				nextProps.form
@@ -62,7 +65,6 @@ class SearchAdd extends React.Component {
 
 	/****************************************/
 	handleInputChange(event) {
-		
 		const target = event.target;
 		const name = target.name;
 		let value = '';

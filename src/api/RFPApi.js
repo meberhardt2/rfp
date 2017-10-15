@@ -57,7 +57,7 @@ class RFPsApi {
 	
 	/****************************************/
 	static addRFP(rfpForm) {
-		const request = new Request(`http://rfp.local/add`, {
+		const request = new Request(`http://rfp.local/rfp`, {
 			method: 'POST',
 			headers: new Headers({
 				'Content-Type': 'application/json'

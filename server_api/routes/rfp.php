@@ -1,7 +1,7 @@
 <?php
 
 /********************************************************************************/
-Flight::route('POST /add', function(){
+Flight::route('POST /rfp', function(){
 	$db_conn = Flight::get('db_conn');
 	$user = Flight::get('user');
 	
@@ -12,6 +12,8 @@ Flight::route('POST /add', function(){
 		$rfp->$key = Flight::request()->data->$key;
 	}
 	
+	$rfp->add();
+
 	$out = array();
 	foreach ($rfp as $key => $value) {
 		if(!empty($value)) {
@@ -53,9 +55,7 @@ Flight::route('GET /rfp/@id', function($id){
 
 	$out = array();
 	foreach ($rfp as $key => $value) {
-		if(!empty($value)) {
-			$out[$key] = $value;
-		}
+		$out[$key] = $value;
 	}
 
 	Flight::json($out);

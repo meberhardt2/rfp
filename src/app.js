@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-//import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+import { NotificationContainer } from 'react-notifications';
+
 import Nav from 'components/common/nav.js';
 import Home from 'components/home/home.js';
 import Results from 'components/results/results.js';
@@ -24,6 +25,7 @@ export default class App extends React.Component {
 							<Route path="/rfp/:id" component={RFP}/>
 						</Switch>
 					</div>
+					<NotificationContainer/>
 				</div>   
 			</Router>
 	  	);
