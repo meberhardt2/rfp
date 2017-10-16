@@ -20,7 +20,7 @@ class SearchAdd extends React.Component {
 		this.state = this.props.form;
 		
 		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.search = this.search.bind(this);
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleModifiedDateChange = this.handleModifiedDateChange.bind(this);
 		this.clearForm = this.clearForm.bind(this);
@@ -88,7 +88,7 @@ class SearchAdd extends React.Component {
 
 
 	/****************************************/
-	handleSubmit(event) {
+	search(event) {
 		event.preventDefault();
 
 		document.getElementById('spinner-holder').style.display = 'block';
@@ -139,7 +139,7 @@ class SearchAdd extends React.Component {
 			<div className="">
 				<form>
 					<div className="form-group text-center button-holder">
-						<button type="button" className="btn btn-primary" onClick={this.handleSubmit}>Search</button>
+						<button type="button" className="btn btn-primary" onClick={this.search}>Search</button>
 						<button type="button" className="btn btn-primary" onClick={this.clearForm}>Clear</button>
 						<button type="button" className="btn btn-primary" onClick={this.addRFP}>Add</button>
 					</div>

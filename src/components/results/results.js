@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';  
+import { connect } from 'react-redux';  
 import { Link } from 'react-router-dom';
 
 /****************************************************************************************/
@@ -18,7 +18,7 @@ class SearchResults extends React.Component {
 	render() {
 		return (
 			<div className="">
-				search results
+				{this.props.rfps.length === 0 ? 'Nothing Found' : 'Found '+this.props.rfps.length+' matches'}
 				{this.props.rfps.map(rfp =>
 					<div key={rfp.id}>
 						<Link to={`/rfp/${rfp.id}`}>{rfp.subject}</Link>

@@ -55,8 +55,10 @@ class RFP extends React.Component {
 			if(typeof this.props.rfpForm.answer !== 'undefined' && this.props.rfpForm.answer !== ''){
 				let div = document.getElementById('highlight-div');
 				let ta = document.getElementById('answer');
+				//g for global, i for case insensative
+				let regexp = new RegExp(this.props.rfpForm.answer, "gi");
 				let patterns = {
-					"pattern1": {"pattern": this.props.rfpForm.answer, "css": "mark-style"},
+					"pattern1": {"pattern": regexp, "css": "mark-style"},
 				}
 				hlghtta(div, ta, patterns);
 			}

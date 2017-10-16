@@ -30,9 +30,18 @@ Flight::route('POST /rfp', function(){
 Flight::route('PUT /search', function(){
 	$db_conn = Flight::get('db_conn');
 	$user = Flight::get('user');
-	
+
+	$terms = array();
+
 	$search = new search($db_conn,$user);
-	$search->terms = $_POST;
+	
+	foreach ($search as $key => $value) {
+		if($key != 'terms' && $key != 'rfps'){
+			$terms[$key] = Flight::request()->data->$key;
+		}
+	}
+		
+	$search->terms = $terms;
 	$search->go();
 
 	$out = array(

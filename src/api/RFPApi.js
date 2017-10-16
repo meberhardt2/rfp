@@ -43,7 +43,7 @@ class RFPsApi {
 			headers: new Headers({
 				'Content-Type': 'application/json'
 			}), 
-			body: JSON.stringify({data: searchData})
+			body: JSON.stringify(searchData)
 		});
 
 		return fetch(request).then(response => {
