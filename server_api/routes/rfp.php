@@ -1,6 +1,34 @@
 <?php
 
 /********************************************************************************/
+Flight::route('PUT /rfp/@id', function($id){
+	$db_conn = Flight::get('db_conn');
+	$user = Flight::get('user');
+
+	$body = Flight::request()->getBody();
+	$body = json_decode($body,true);
+	
+	$rfp = new rfp_actions($db_conn,$user);
+	$rfp->id = $id;
+	
+	//the json body was decoded above. fill in the fields that were sent. also store the field names so in the update we only update what we were sent, not the whole object/form
+	foreach($body as $field_name => $field_value){
+		$rfp->updated_form_fields[] = $field_name;
+		$rfp->$field_name = $field_value;
+	}
+		
+	$rfp->update();
+
+	$out = array(
+		'status' => 'success'
+	);
+
+	Flight::json($out);
+});
+/********************************************************************************/
+
+
+/********************************************************************************/
 Flight::route('POST /rfp', function(){
 	$db_conn = Flight::get('db_conn');
 	$user = Flight::get('user');

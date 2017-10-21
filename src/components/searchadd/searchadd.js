@@ -6,7 +6,7 @@ import { NotificationManager } from 'react-notifications';
 import * as rfpActions from 'stores/actions/rfpActions';
 import * as rfpFormActions from 'stores/actions/rfpFormActions';
 
-import RFPForm from 'components/common/rfpForm.js';
+import RFPForm from 'components/common/rfpForm';
 
 /****************************************************************************************/
 class SearchAdd extends React.Component {
@@ -143,6 +143,8 @@ class SearchAdd extends React.Component {
 						<button type="button" className="btn btn-primary" onClick={this.clearForm}>Clear</button>
 						<button type="button" className="btn btn-primary" onClick={this.addRFP}>Add</button>
 					</div>
+
+					<hr size="1" width="70%" />
 
 					<RFPForm 
 						{...this.state} 

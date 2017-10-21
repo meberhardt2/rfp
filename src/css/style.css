@@ -35,3 +35,28 @@
 .mark-style{
 	background: #20b133;
 }
+
+.results-holder{
+	margin:20px 10px 10px 10px;
+}
+
+.results-holder div{
+	padding:5px 0 5px 0;
+	border-bottom:1px solid #c7c5c5;
+	width:50%;
+}
+
+.results-holder div:last-child{
+	border-bottom:0px;
+}
+
+.rfp-topper{
+	width:100%;
+	text-align:center;
+	margin-bottom: 20px;
+	padding-right:15px;
+}
+
+hr{
+	border-top:1px solid rgb(194, 192, 192);
+}

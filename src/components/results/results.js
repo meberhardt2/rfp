@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';  
-import { Link } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
+import ResultItem from 'components/results/resultItem';
 
 /****************************************************************************************/
 class SearchResults extends React.Component {
@@ -35,9 +35,9 @@ class SearchResults extends React.Component {
 	/****************************************/
 
 
-// 1: 5, 0
-// 2: 10, 5
-// 3: 15, 10
+	// 1: 5, 0
+	// 2: 10, 5
+	// 3: 15, 10
 	/****************************************/
 	build_results(){
 		let rfpLink = '';
@@ -48,7 +48,7 @@ class SearchResults extends React.Component {
 		if(this.props.rfps.length > 0){
 			rfpLink = this.props.rfps.map((rfp,index) => {
 				if(index >= pagingStart && index < pagingEnd ){
-					return(<div key={rfp.id}><Link to={`/rfp/${rfp.id}`}>{rfp.subject}</Link></div>);
+					return(<ResultItem key={rfp.id} {...rfp} />);
 				}
 				else{
 					return('');

@@ -75,13 +75,13 @@ class RFPsApi {
 
 
 	/****************************************/
-	static updateRFP(rfp) {
-		const request = new Request(`http://localhost:5000/api/v1/cats/${rfp.id}`, {
+	static updateRFP(id,rfpUpdates) {
+		const request = new Request(`http://rfp.local/rfp/${id}`, {
 			method: 'PUT',
 			headers: new Headers({
 				'Content-Type': 'application/json'
 			}), 
-			body: JSON.stringify({rfp: rfp})
+			body: JSON.stringify(rfpUpdates)
 		});
 
 		return fetch(request).then(response => {
