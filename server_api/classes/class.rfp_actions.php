@@ -69,9 +69,6 @@ class rfp_actions extends rfp{
 				$sql->bindValue(':'.$field, $this->$field);
 			}
 			$sql->execute();
-			$arr = $sql->errorInfo();
-			$debug = var_export($arr,true);
-			file_put_contents('c:/test.txt', $debug);
 		}
 	}
 	/******************************************/
@@ -79,7 +76,10 @@ class rfp_actions extends rfp{
 
 	/******************************************/
 	function delete(){
-
+		$sql = "delete from rfp where id = :id";
+		$sql = $this->db->conn->prepare($sql);
+		$sql->bindValue(':id', $this->id);
+		$sql->execute();
 	}
 	/******************************************/
 
@@ -89,7 +89,7 @@ class rfp_actions extends rfp{
 		$sql_first = '';
 		$sql_second = '';
 		foreach(get_object_vars($this) as $prop=>$val){
-			if($prop != 'id' && $prop != 'db' && $prop != 'user'){
+			if($prop != 'id' && $prop != 'db' && $prop != 'user' && $prop != 'updated_form_fields'){
 				$sql_first .= $prop.',';
 				$sql_second .= ':'.$prop.',';
 			}

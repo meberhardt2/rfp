@@ -98,3 +98,21 @@ Flight::route('GET /rfp/@id', function($id){
 	Flight::json($out);
 });
 /********************************************************************************/
+
+
+/********************************************************************************/
+Flight::route('DELETE /rfp/@id', function($id){
+	$db_conn = Flight::get('db_conn');
+	$user = Flight::get('user');
+
+	$rfp = new rfp_actions($db_conn,$user);
+	$rfp->id = $id;
+	$rfp->delete();
+
+	$out = array(
+		'status' => 'success'
+	);
+
+	Flight::json($out);
+});
+/********************************************************************************/

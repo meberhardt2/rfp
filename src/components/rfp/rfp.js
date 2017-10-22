@@ -3,6 +3,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { NotificationManager } from 'react-notifications';
+import { Modal } from 'react-bootstrap';
 import Moment from 'moment';
 import RFPApi from 'api/RFPApi';
 import RFPForm from 'components/common/rfpForm';
@@ -14,13 +15,18 @@ class RFP extends React.Component {
 	/****************************************/
 	constructor(props) {
 		super(props);
-		this.state = {};
-
+		this.state = {
+			showModal: false
+		};
+		
 		this.getRFP = this.getRFP.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleModifiedDateChange = this.handleModifiedDateChange.bind(this);
 		this.handleUpdate = this.handleUpdate.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
+		this.deleteRFP = this.deleteRFP.bind(this);
 		
 		this.getRFP(this.props.rfpid);
 	}
@@ -160,12 +166,39 @@ class RFP extends React.Component {
 		this.setState({
 			rfpUpdates: prevUpdates,
 			[name]: value
-		},function(){
-			console.log(this.state);
 		});
 	}
 	/****************************************/
 	
+
+	/****************************************/
+	deleteRFP(){
+		document.getElementById('spinner-holder').style.display = 'block';
+
+		RFPApi.deleteRFP(this.props.rfpid).then((data) => {
+			document.getElementById('spinner-holder').style.display = 'none';
+
+			this.props.history.push("/");
+			
+			NotificationManager.success('RFP Deleted', 'Deleted!', 2000);
+		});
+	}
+	/****************************************/
+
+
+	/****************************************/
+	closeModal(){
+		this.setState({ showModal: false });
+	}
+	/****************************************/
+
+
+	/****************************************/
+	openModal(){
+		this.setState({ showModal: true });
+	}
+	/****************************************/
+
 
 	/****************************************/
 	render() {
@@ -174,6 +207,8 @@ class RFP extends React.Component {
 				<form>
 					<div className="form-group text-center button-holder">
 						<button type="button" className="btn btn-primary" onClick={this.handleUpdate}>Update</button>
+						&nbsp;
+						<button type="button" className="btn btn-danger" onClick={this.openModal}>Delete</button>
 					</div>
 
 					<hr size="1" width="70%" />
@@ -187,6 +222,21 @@ class RFP extends React.Component {
 						dateModifiedChange={(date) => this.handleModifiedDateChange(date)}
 					/>
 				</form>
+				
+				
+				<Modal show={this.state.showModal} onHide={this.closeModal}>
+					<Modal.Header>
+						<Modal.Title>Delete RFP</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						Are you sure you want to delete this RFP?
+					</Modal.Body>
+					<Modal.Footer>
+						<button type="button" className="btn btn-primary" onClick={this.closeModal}>Cancel</button>
+						&nbsp;
+						<button type="button" className="btn btn-danger" onClick={this.deleteRFP}>Delete</button>
+          			</Modal.Footer>
+				</Modal>
 			</div>
 		);
 	}

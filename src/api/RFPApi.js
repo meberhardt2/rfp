@@ -92,6 +92,24 @@ class RFPsApi {
 	}	
 	/****************************************/
 
+
+	/****************************************/
+	static deleteRFP(id) {
+		const request = new Request(`http://rfp.local/rfp/${id}`, {
+			method: 'DELETE',
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			})
+		});
+
+		return fetch(request).then(response => {
+			return response.json();
+		}).catch(error => {
+			return error;
+		});
+	}	
+	/****************************************/
+
 }
 /****************************************************************************************/
 
